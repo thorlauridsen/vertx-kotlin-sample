@@ -1,0 +1,17 @@
+[versions]
+jackson = "2.18.3"
+kotlin = "2.1.20"
+h2database = "2.3.232"
+liquibase = "4.31.1"
+
+[libraries]
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+
+# H2 for in-memory database
+h2database = { module = "com.h2database:h2", version.ref = "h2database" }
+
+# Liquibase for managing database changelogs
+liquibase-core = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
