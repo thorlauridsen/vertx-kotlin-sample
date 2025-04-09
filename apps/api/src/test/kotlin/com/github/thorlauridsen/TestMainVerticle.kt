@@ -1,6 +1,5 @@
-package sample
+package com.github.thorlauridsen
 
-import com.github.thorlauridsen.MainVerticle
 import io.vertx.core.Vertx
 import io.vertx.junit5.VertxExtension
 import io.vertx.junit5.VertxTestContext

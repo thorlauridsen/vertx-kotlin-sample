@@ -1,6 +1,5 @@
-package sample
+package com.github.thorlauridsen
 
-import com.github.thorlauridsen.MainVerticle
 import com.github.thorlauridsen.dto.CustomerInputDto
 import io.vertx.core.Vertx
 import io.vertx.core.json.JsonObject
