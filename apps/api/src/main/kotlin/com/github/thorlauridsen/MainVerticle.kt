@@ -81,7 +81,7 @@ class MainVerticle : CoroutineVerticle() {
         vertx
             .createHttpServer()
             .requestHandler { request -> router.handle(request) }
-            .listen(8888)
+            .listen(8080)
             .coAwait()
     }
 }
