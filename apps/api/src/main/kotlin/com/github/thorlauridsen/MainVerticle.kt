@@ -40,9 +40,9 @@ class MainVerticle : CoroutineVerticle() {
         val pool = JDBCPool.pool(
             vertx,
             JDBCConnectOptions()
-                .setJdbcUrl("jdbc:h2:~/test")
-                .setUser("sa")
-                .setPassword(""),
+                .setJdbcUrl(jdbcUrl)
+                .setUser(username)
+                .setPassword(password),
             PoolOptions()
                 .setMaxSize(16)
                 .setName("pool-name")
