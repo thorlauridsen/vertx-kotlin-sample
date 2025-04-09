@@ -45,6 +45,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.ongres.scram:client:2.1")
     testImplementation("io.vertx:vertx-junit5")
+    testImplementation("io.vertx:vertx-web-client")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
 }
 
