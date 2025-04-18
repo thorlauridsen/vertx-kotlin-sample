@@ -13,7 +13,7 @@ class TestMainVerticle {
     @BeforeEach
     fun deploy_verticle(vertx: Vertx, testContext: VertxTestContext) {
         vertx.deployVerticle(MainVerticle())
-            .onComplete(testContext.succeeding<String> { _ -> testContext.completeNow() })
+            .onComplete(testContext.succeeding { _ -> testContext.completeNow() })
     }
 
     @Test
