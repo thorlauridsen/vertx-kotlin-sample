@@ -5,6 +5,8 @@ import com.github.thorlauridsen.persistence.CustomerRepo
 import com.github.thorlauridsen.route.CustomerRouter.setupCustomerRouter
 import com.github.thorlauridsen.service.CustomerService
 import io.vertx.ext.web.Router
+import io.vertx.ext.web.handler.StaticHandler
+import io.vertx.ext.web.openapi.RouterBuilder
 import io.vertx.kotlin.coroutines.CoroutineVerticle
 import io.vertx.kotlin.coroutines.coAwait
 import io.vertx.kotlin.coroutines.coroutineRouter
@@ -15,15 +17,14 @@ import io.vertx.kotlin.coroutines.coroutineRouter
  * This verticle is responsible for:
  * - Initializing the database.
  * - Setting up the HTTP routes/endpoints.
+ * - Setting up the swagger documentation.
  * - Starting the HTTP server.
  */
 class MainVerticle : CoroutineVerticle() {
 
     /**
      * Start the verticle.
-     *
      * This method is called when the verticle is deployed.
-     * It initializes the database, sets up the HTTP routes, and starts the HTTP server.
      */
     override suspend fun start() {
 
@@ -36,6 +37,21 @@ class MainVerticle : CoroutineVerticle() {
 
         coroutineRouter {
             setupCustomerRouter(router, customerService)
+        }
+
+        router.route("/static/*").handler(StaticHandler.create("webroot"))
+        router.get("/swagger").handler { ctx ->
+            ctx.response()
+                .sendFile("webroot/swagger-ui.html")
+        }
+        router.get("/openapi.yaml").handler { ctx ->
+            vertx.fileSystem().readFile("src/main/resources/openapi.yaml").onSuccess { buffer ->
+                ctx.response()
+                    .putHeader("content-type", "text/yaml")
+                    .end(buffer)
+            }.onFailure { err ->
+                ctx.fail(err)
+            }
         }
         vertx
             .createHttpServer()
