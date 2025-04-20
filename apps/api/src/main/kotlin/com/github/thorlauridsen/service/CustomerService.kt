@@ -32,7 +32,7 @@ class CustomerService(private val customerRepo: ICustomerRepo) {
     /**
      * Get a customer given an id.
      * @param id [UUID] to fetch customer.
-     * @throws IllegalStateException if no customer found with given id.
+     * @throws IllegalStateException if no customer found with the given id.
      * @return [Customer] retrieved from database.
      */
     suspend fun find(id: UUID): Customer {
