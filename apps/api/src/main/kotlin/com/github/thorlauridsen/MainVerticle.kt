@@ -9,8 +9,22 @@ import io.vertx.kotlin.coroutines.CoroutineVerticle
 import io.vertx.kotlin.coroutines.coAwait
 import io.vertx.kotlin.coroutines.coroutineRouter
 
+/**
+ * Main verticle for the Vert.x application.
+ *
+ * This verticle is responsible for:
+ * - Initializing the database.
+ * - Setting up the HTTP routes/endpoints.
+ * - Starting the HTTP server.
+ */
 class MainVerticle : CoroutineVerticle() {
 
+    /**
+     * Start the verticle.
+     *
+     * This method is called when the verticle is deployed.
+     * It initializes the database, sets up the HTTP routes, and starts the HTTP server.
+     */
     override suspend fun start() {
 
         val database = DatabaseInitializer(vertx)
