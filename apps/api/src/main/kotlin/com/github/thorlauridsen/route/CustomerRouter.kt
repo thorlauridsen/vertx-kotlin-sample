@@ -9,8 +9,17 @@ import io.vertx.ext.web.handler.BodyHandler
 import io.vertx.kotlin.coroutines.CoroutineRouterSupport
 import java.util.UUID
 
+/**
+ * Customer router for defining the routes related to customer operations.
+ */
 object CustomerRouter {
 
+    /**
+     * Sets up the HTTP endpoints for customer operations.
+     *
+     * @param router The router to set up.
+     * @param customerService The customer service to handle customer operations.
+     */
     fun CoroutineRouterSupport.setupCustomerRouter(router: Router, customerService: CustomerService) {
 
         router.get("/customers/:id")
