@@ -29,8 +29,8 @@ object CustomerRouter {
                 val uuid = UUID.fromString(id)
                 val customer = customerService.find(uuid)
                 val json = JsonObject.mapFrom(customer).encode()
-                routingContext
-                    .response()
+
+                routingContext.response()
                     .putHeader("content-type", "application/json")
                     .end(json)
             }
@@ -44,8 +44,8 @@ object CustomerRouter {
                 val customer = body.asJsonObject().mapTo(CustomerInputDto::class.java)
                 val saved = customerService.save(customer.toModel())
                 val json = JsonObject.mapFrom(saved.toDto()).encode()
-                routingContext
-                    .response()
+
+                routingContext.response()
                     .putHeader("content-type", "application/json")
                     .end(json)
             }
