@@ -5,11 +5,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 
 plugins {
     application
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    alias(local.plugins.shadow)
 }
-
-val vertxVersion = "4.5.13"
-val junitJupiterVersion = "5.9.1"
 
 val mainVerticleName = "com.github.thorlauridsen.MainVerticle"
 val launcherClassName = "io.vertx.core.Launcher"
@@ -24,29 +21,32 @@ dependencies {
     implementation(projects.model)
     implementation(projects.persistence)
 
-    implementation(platform("io.vertx:vertx-stack-depchain:$vertxVersion"))
-    implementation("io.vertx:vertx-web-validation")
-    implementation("io.vertx:vertx-web")
-    implementation("io.vertx:vertx-web-openapi")
-    implementation("io.vertx:vertx-pg-client")
-    implementation("io.vertx:vertx-jdbc-client")
-    implementation("io.vertx:vertx-lang-kotlin-coroutines")
-    implementation("io.vertx:vertx-json-schema")
-    implementation("io.vertx:vertx-lang-kotlin")
+    implementation(platform(local.vertx.stack.depchain))
+    implementation(local.vertx.web.validation)
+    implementation(local.vertx.web)
+    implementation(local.vertx.web.openapi)
+    implementation(local.vertx.pg.client)
+    implementation(local.vertx.jdbc.client)
+    implementation(local.vertx.lang.kotlin.coroutines)
+    implementation(local.vertx.json.schema)
+    implementation(local.vertx.lang.kotlin)
+    implementation(local.vertx.config)
+    implementation(local.vertx.config.yaml)
     implementation(local.jackson.databind)
 
     runtimeOnly(local.h2database)
+    runtimeOnly(local.postgresql)
 
     // Liquibase for database migrations
     implementation(local.liquibase.core)
 
-    implementation("io.agroal:agroal-pool:2.5")
+    implementation(local.agroal.pool)
 
     implementation(kotlin("stdlib-jdk8"))
-    implementation("com.ongres.scram:client:2.1")
-    testImplementation("io.vertx:vertx-junit5")
-    testImplementation("io.vertx:vertx-web-client")
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+    implementation(local.ongres.scram.client)
+    testImplementation(local.vertx.junit5)
+    testImplementation(local.vertx.web.client)
+    testImplementation(local.junit.jupiter)
 }
 
 tasks.withType<ShadowJar> {

@@ -3,15 +3,45 @@ jackson = "2.18.3"
 kotlin = "2.1.20"
 h2database = "2.3.232"
 liquibase = "4.31.1"
+vertx = "4.5.13"
+junit-jupiter = "5.9.1"
+agroal = "2.5"
+ongres-scram = "2.1"
+shadow-plugin = "7.1.2"
+postgresql = "42.7.3"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 
-# H2 for in-memory database
+# H2 for an in-memory database
 h2database = { module = "com.h2database:h2", version.ref = "h2database" }
 
 # Liquibase for managing database changelogs
 liquibase-core = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
 
+# Vertx dependencies
+vertx-web-validation = { module = "io.vertx:vertx-web-validation", version.ref = "vertx" }
+vertx-web = { module = "io.vertx:vertx-web", version.ref = "vertx" }
+vertx-web-openapi = { module = "io.vertx:vertx-web-openapi", version.ref = "vertx" }
+vertx-pg-client = { module = "io.vertx:vertx-pg-client", version.ref = "vertx" }
+vertx-jdbc-client = { module = "io.vertx:vertx-jdbc-client", version.ref = "vertx" }
+vertx-lang-kotlin-coroutines = { module = "io.vertx:vertx-lang-kotlin-coroutines", version.ref = "vertx" }
+vertx-json-schema = { module = "io.vertx:vertx-json-schema", version.ref = "vertx" }
+vertx-lang-kotlin = { module = "io.vertx:vertx-lang-kotlin", version.ref = "vertx" }
+vertx-stack-depchain = { module = "io.vertx:vertx-stack-depchain", version.ref = "vertx" }
+vertx-junit5 = { module = "io.vertx:vertx-junit5", version.ref = "vertx" }
+vertx-web-client = { module = "io.vertx:vertx-web-client", version.ref = "vertx" }
+vertx-config = { module = "io.vertx:vertx-config", version.ref = "vertx" }
+vertx-config-yaml = { module = "io.vertx:vertx-config-yaml", version.ref = "vertx" }
+
+# JUnit Jupiter
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+
+# Other dependencies
+agroal-pool = { module = "io.agroal:agroal-pool", version.ref = "agroal" }
+ongres-scram-client = { module = "com.ongres.scram:client", version.ref = "ongres-scram" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow-plugin" }
