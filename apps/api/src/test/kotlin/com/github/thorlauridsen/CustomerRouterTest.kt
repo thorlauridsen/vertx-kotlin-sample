@@ -14,7 +14,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(VertxExtension::class)
-class IntegrationTest {
+class CustomerRouterTest {
+
+    private val clientOptions = WebClientOptions().setDefaultHost("localhost").setDefaultPort(8080)
 
     @BeforeEach
     fun deployVerticle(vertx: Vertx, testContext: VertxTestContext) {
@@ -28,8 +30,7 @@ class IntegrationTest {
     }
 
     @Test
-    fun testHttpEndpoint(vertx: Vertx, testContext: VertxTestContext) {
-        val clientOptions = WebClientOptions().setDefaultHost("localhost").setDefaultPort(8080)
+    fun `get customer - random id - returns not found`(vertx: Vertx, testContext: VertxTestContext) {
         val client = WebClient.create(vertx, clientOptions)
         val id = UUID.randomUUID()
 
@@ -47,23 +48,30 @@ class IntegrationTest {
     }
 
     @Test
-    fun postCustomer(vertx: Vertx, testContext: VertxTestContext) {
-        val clientOptions = WebClientOptions().setDefaultHost("localhost").setDefaultPort(8080)
+    fun `post customer - get customer - success`(vertx: Vertx, testContext: VertxTestContext) {
         val client = WebClient.create(vertx, clientOptions)
-
         val customer = CustomerInputDto(mail = "test@example.com")
         val customerJson = JsonObject.mapFrom(customer)
+        var customerId: String? = null
 
-        client.post("/customers").sendJsonObject(customerJson) { ar ->
-            if (ar.succeeded()) {
-                val response = ar.result()
+        client.post("/customers")
+            .sendJsonObject(customerJson)
+            .compose { postRes ->
                 testContext.verify {
-                    assertEquals(200, response.statusCode())
-                    testContext.completeNow()
+                    assertEquals(200, postRes.statusCode())
+                    assertEquals(customer.mail, postRes.bodyAsJsonObject().getString("mail"))
                 }
-            } else {
-                testContext.failNow(ar.cause())
+                customerId = postRes.bodyAsJsonObject().getString("id")
+                client.get("/customers/$customerId").send()
             }
-        }
+            .onSuccess { getRes ->
+                testContext.verify {
+                    assertEquals(200, getRes.statusCode())
+                    val json = getRes.bodyAsJsonObject()
+                    assertEquals(customerId, json.getString("id"))
+                    assertEquals(customer.mail, json.getString("mail"))
+                }
+                testContext.completeNow()
+            }
     }
 }
