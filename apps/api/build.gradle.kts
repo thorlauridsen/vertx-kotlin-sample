@@ -18,32 +18,42 @@ application {
 }
 
 dependencies {
+    // The api subproject needs access to both the model and persistence subproject
     implementation(projects.model)
     implementation(projects.persistence)
 
-    implementation(platform(local.vertx.stack.depchain))
-    implementation(local.vertx.web.validation)
-    implementation(local.vertx.web)
-    implementation(local.vertx.web.openapi)
-    implementation(local.vertx.pg.client)
-    implementation(local.vertx.jdbc.client)
-    implementation(local.vertx.lang.kotlin.coroutines)
-    implementation(local.vertx.json.schema)
-    implementation(local.vertx.lang.kotlin)
+    // Vert.x dependencies
     implementation(local.vertx.config)
     implementation(local.vertx.config.yaml)
+    implementation(local.vertx.jdbc.client)
+    implementation(local.vertx.json.schema)
+    implementation(local.vertx.lang.kotlin)
+    implementation(local.vertx.lang.kotlin.coroutines)
+    implementation(local.vertx.pg.client)
+    implementation(local.vertx.web)
+    implementation(local.vertx.web.openapi)
+    implementation(local.vertx.web.validation)
+    implementation(platform(local.vertx.stack.depchain))
+
+    // FasterXML Jackson databind for JSON serialization/deserialization
     implementation(local.jackson.databind)
 
+    // H2 in-memory database
     runtimeOnly(local.h2database)
+
+    // PostgreSQL database driver
     runtimeOnly(local.postgresql)
 
     // Liquibase for database migrations
     implementation(local.liquibase.core)
 
+    // JDBC connection pool for Vert.x + PostgreSQL
     implementation(local.agroal.pool)
 
-    implementation(kotlin("stdlib-jdk8"))
+    // SCRAM client for authenticating PostgreSQL connections
     implementation(local.ongres.scram.client)
+
+    // Test dependencies
     testImplementation(local.vertx.junit5)
     testImplementation(local.vertx.web.client)
     testImplementation(local.junit.jupiter)
