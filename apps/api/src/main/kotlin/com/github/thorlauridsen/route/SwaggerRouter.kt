@@ -17,6 +17,7 @@ object SwaggerRouter {
      */
     fun setupStaticRouter(router: Router, vertx: Vertx) {
         router.route("/static/*").handler(StaticHandler.create("webroot"))
+
         router.get("/swagger").handler { ctx ->
             ctx.response().sendFile("webroot/swagger-ui.html")
         }
