@@ -1,5 +1,6 @@
 package com.github.thorlauridsen
 
+import com.github.thorlauridsen.dto.CustomerDto
 import com.github.thorlauridsen.dto.CustomerInputDto
 import io.netty.handler.codec.http.HttpResponseStatus
 import io.vertx.core.Vertx
@@ -87,9 +88,10 @@ class CustomerRouterTest {
             .onSuccess { getResponse ->
                 assertEquals(HttpResponseStatus.OK.code(), getResponse.statusCode())
                 val json = getResponse.bodyAsJsonObject()
+                val foundCustomer = json.mapTo(CustomerDto::class.java)
 
-                assertEquals(customerId, json.getString("id"))
-                assertEquals(customer.mail, json.getString("mail"))
+                assertEquals(customerId, foundCustomer.id)
+                assertEquals(customer.mail, foundCustomer.mail)
             }
     }
 }
