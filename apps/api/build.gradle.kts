@@ -37,6 +37,8 @@ dependencies {
 
     // FasterXML Jackson databind for JSON serialization/deserialization
     implementation(local.jackson.databind)
+    implementation(local.jackson.datatype.jsr310)
+    implementation(local.jackson.module.kotlin)
 
     // H2 in-memory database
     runtimeOnly(local.h2database)

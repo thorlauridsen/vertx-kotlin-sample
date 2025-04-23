@@ -14,8 +14,10 @@ vertx = "4.5.13"
 # JDBC connection pool for Vert.x + PostgreSQL
 agroal-pool = { module = "io.agroal:agroal-pool", version.ref = "agroal" }
 
-# FasterXML Jackson dependency for JSON serialization/deserialization
+# FasterXML Jackson dependencies for JSON serialization/deserialization and Java 8 date/time support
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 
 # JUnit Jupiter
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
