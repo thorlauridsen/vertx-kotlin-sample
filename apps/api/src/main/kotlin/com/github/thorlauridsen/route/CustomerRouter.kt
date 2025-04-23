@@ -12,7 +12,7 @@ import java.util.UUID
 /**
  * Customer router for defining the routes related to customer operations.
  */
-object CustomerRouter {
+object CustomerRouter : BaseRouter() {
 
     /**
      * Sets up the HTTP endpoints for customer operations.
@@ -25,14 +25,19 @@ object CustomerRouter {
         router.get("/customers/:id")
             .produces("application/json")
             .coHandler { routingContext ->
-                val id = routingContext.request().getParam("id")
-                val uuid = UUID.fromString(id)
-                val customer = customerService.find(uuid)
-                val json = JsonObject.mapFrom(customer).encode()
+                routingContext.handleRequest {
 
-                routingContext.response()
-                    .putHeader("content-type", "application/json")
-                    .end(json)
+                    val id = routingContext.request().getParam("id")
+                    val uuid = UUID.fromString(id)
+                    val customer = customerService.find(uuid)
+                    val json = JsonObject.mapFrom(customer).encode()
+
+                    logger.info("GET /customers/$id -> $customer")
+
+                    routingContext.response()
+                        .putHeader("content-type", "application/json")
+                        .end(json)
+                }
             }
 
         router.post("/customers")
@@ -40,14 +45,19 @@ object CustomerRouter {
             .produces("application/json")
             .handler(BodyHandler.create())
             .coHandler { routingContext ->
-                val body = routingContext.body()
-                val customer = body.asJsonObject().mapTo(CustomerInputDto::class.java)
-                val saved = customerService.save(customer.toModel())
-                val json = JsonObject.mapFrom(saved.toDto()).encode()
+                routingContext.handleRequest {
 
-                routingContext.response()
-                    .putHeader("content-type", "application/json")
-                    .end(json)
+                    val body = routingContext.body()
+                    val customer = body.asJsonObject().mapTo(CustomerInputDto::class.java)
+                    val saved = customerService.save(customer.toModel())
+                    val json = JsonObject.mapFrom(saved.toDto()).encode()
+
+                    logger.info("POST /customers $customer -> $saved")
+
+                    routingContext.response()
+                        .putHeader("content-type", "application/json")
+                        .end(json)
+                }
             }
     }
 }
