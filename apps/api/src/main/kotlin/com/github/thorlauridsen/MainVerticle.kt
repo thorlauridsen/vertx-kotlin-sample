@@ -1,6 +1,7 @@
 package com.github.thorlauridsen
 
 import com.github.thorlauridsen.config.DatabaseInitializer
+import com.github.thorlauridsen.config.JacksonConfig
 import com.github.thorlauridsen.persistence.CustomerRepo
 import com.github.thorlauridsen.route.CustomerRouter.setupCustomerRouter
 import com.github.thorlauridsen.route.SwaggerRouter.setupStaticRouter
@@ -26,6 +27,7 @@ class MainVerticle : CoroutineVerticle() {
      * This method is called when the verticle is deployed.
      */
     override suspend fun start() {
+        JacksonConfig.configureJackson()
 
         val database = DatabaseInitializer(vertx)
         val pool = database.initialize()
