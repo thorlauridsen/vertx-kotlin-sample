@@ -15,6 +15,8 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 @ExtendWith(VertxExtension::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -61,9 +63,15 @@ class CustomerRouterTest {
         }
     }
 
-    @Test
-    fun `post customer - get customer - success`() {
-        val customer = CustomerInputDto(mail = "test@example.com")
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "alice@gmail.com",
+            "bob@gmail.com",
+        ]
+    )
+    fun `post customer - get customer - success`(mail: String) {
+        val customer = CustomerInputDto(mail)
         val customerJson = JsonObject.mapFrom(customer)
         var customerId: String? = null
 
