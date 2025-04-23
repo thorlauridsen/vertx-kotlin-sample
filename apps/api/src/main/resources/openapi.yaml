@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+    title: Customer API
+    description: API for managing customers
+    version: 1.0.0
+servers:
+    -   url: http://localhost:8080
+        description: Local development server
+paths:
+    /customers:
+        post:
+            summary: Create a new customer
+            description: Creates a new customer with the provided information
+            operationId: createCustomer
+            requestBody:
+                description: Customer information
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CustomerInput'
+            responses:
+                '200':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Customer'
+    /customers/{id}:
+        get:
+            summary: Get a customer by ID
+            description: Retrieves a customer by their UUID
+            operationId: getCustomerById
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    description: UUID of the customer to retrieve
+                    schema:
+                        type: string
+                        format: uuid
+            responses:
+                '200':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Customer'
+                '404':
+                    description: Customer not found
+components:
+    schemas:
+        Customer:
+            type: object
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                    description: UUID of the customer
+                mail:
+                    type: string
+                    description: Email address of the customer
+                    example: bob@gmail.com
+            required:
+                - id
+                - mail
+        CustomerInput:
+            type: object
+            properties:
+                mail:
+                    type: string
+                    description: Email address of the customer
+                    example: bob@gmail.com
+            required:
+                - mail

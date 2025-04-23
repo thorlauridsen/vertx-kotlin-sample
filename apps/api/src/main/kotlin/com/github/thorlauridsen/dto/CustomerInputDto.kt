@@ -8,7 +8,8 @@ import com.github.thorlauridsen.model.CustomerInput
  * @param mail Mail address of customer.
  */
 data class CustomerInputDto(
-    @JsonProperty("mail") val mail: String,
+    @JsonProperty("mail")
+    val mail: String,
 ) {
 
     /**

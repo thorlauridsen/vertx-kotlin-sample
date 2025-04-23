@@ -1,0 +1,29 @@
+services:
+    postgres:
+        image: postgres:17
+        container_name: postgres
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: sample-db
+        ports:
+            - "5432:5432"
+        restart: unless-stopped
+
+    api:
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+        container_name: vertx-api
+        depends_on:
+            - postgres
+        command: >
+            java
+            -Ddatabase.url=jdbc:postgresql://postgres:5432/sample-db
+            -Ddatabase.username=postgres
+            -Ddatabase.password=postgres
+            -jar app.jar
+        image: vertx-kotlin-sample:latest
+        ports:
+            - "8080:8080"
+        restart: unless-stopped

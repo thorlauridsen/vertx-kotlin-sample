@@ -5,11 +5,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 
 plugins {
     application
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    alias(local.plugins.shadow)
 }
-
-val vertxVersion = "4.5.13"
-val junitJupiterVersion = "5.9.1"
 
 val mainVerticleName = "com.github.thorlauridsen.MainVerticle"
 val launcherClassName = "io.vertx.core.Launcher"
@@ -21,32 +18,48 @@ application {
 }
 
 dependencies {
+    // The api subproject needs access to both the model and persistence subproject
     implementation(projects.model)
     implementation(projects.persistence)
 
-    implementation(platform("io.vertx:vertx-stack-depchain:$vertxVersion"))
-    implementation("io.vertx:vertx-web-validation")
-    implementation("io.vertx:vertx-web")
-    implementation("io.vertx:vertx-web-openapi")
-    implementation("io.vertx:vertx-pg-client")
-    implementation("io.vertx:vertx-jdbc-client")
-    implementation("io.vertx:vertx-lang-kotlin-coroutines")
-    implementation("io.vertx:vertx-json-schema")
-    implementation("io.vertx:vertx-lang-kotlin")
-    implementation(local.jackson.databind)
+    // Vert.x dependencies
+    implementation(local.vertx.config)
+    implementation(local.vertx.config.yaml)
+    implementation(local.vertx.jdbc.client)
+    implementation(local.vertx.json.schema)
+    implementation(local.vertx.lang.kotlin)
+    implementation(local.vertx.lang.kotlin.coroutines)
+    implementation(local.vertx.pg.client)
+    implementation(local.vertx.web)
+    implementation(local.vertx.web.openapi)
+    implementation(local.vertx.web.validation)
+    implementation(platform(local.vertx.stack.depchain))
 
+    // FasterXML Jackson databind for JSON serialization/deserialization
+    implementation(local.jackson.databind)
+    implementation(local.jackson.datatype.jsr310)
+    implementation(local.jackson.module.kotlin)
+
+    // H2 in-memory database
     runtimeOnly(local.h2database)
+
+    // PostgreSQL database driver
+    runtimeOnly(local.postgresql)
 
     // Liquibase for database migrations
     implementation(local.liquibase.core)
 
-    implementation("io.agroal:agroal-pool:2.5")
+    // JDBC connection pool for Vert.x + PostgreSQL
+    implementation(local.agroal.pool)
 
-    implementation(kotlin("stdlib-jdk8"))
-    implementation("com.ongres.scram:client:2.1")
-    testImplementation("io.vertx:vertx-junit5")
-    testImplementation("io.vertx:vertx-web-client")
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+    // SCRAM client for authenticating PostgreSQL connections
+    implementation(local.ongres.scram.client)
+
+    // Test dependencies
+    testImplementation(local.vertx.junit5)
+    testImplementation(local.vertx.web.client)
+    testImplementation(local.junit.jupiter)
+    testImplementation(local.kotlin.coroutines.test)
 }
 
 tasks.withType<ShadowJar> {

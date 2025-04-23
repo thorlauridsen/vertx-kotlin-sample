@@ -1,17 +1,58 @@
 [versions]
-jackson = "2.18.3"
-kotlin = "2.1.20"
+agroal = "2.6"
+coroutines = "1.10.2"
 h2database = "2.3.232"
+jackson = "2.18.3"
+junit-jupiter = "5.9.1"
+kotlin = "2.1.20"
 liquibase = "4.31.1"
+ongres-scram = "2.1"
+postgresql = "42.7.5"
+shadow-plugin = "7.1.2"
+vertx = "4.5.14"
 
 [libraries]
-jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+# JDBC connection pool for Vert.x + PostgreSQL
+agroal-pool = { module = "io.agroal:agroal-pool", version.ref = "agroal" }
 
-# H2 for in-memory database
+# FasterXML Jackson dependencies for JSON serialization/deserialization and Java 8 date/time support
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+
+# JUnit Jupiter
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+
+# H2 for an in-memory database
 h2database = { module = "com.h2database:h2", version.ref = "h2database" }
+
+# Kotlin Coroutines test dependency
+kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
 # Liquibase for managing database changelogs
 liquibase-core = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
 
+# SCRAM client for authenticating PostgreSQL connections
+ongres-scram-client = { module = "com.ongres.scram:client", version.ref = "ongres-scram" }
+
+# PostgreSQL for a live database
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+
+# Vert.x dependencies
+vertx-config = { module = "io.vertx:vertx-config", version.ref = "vertx" }
+vertx-config-yaml = { module = "io.vertx:vertx-config-yaml", version.ref = "vertx" }
+vertx-jdbc-client = { module = "io.vertx:vertx-jdbc-client", version.ref = "vertx" }
+vertx-json-schema = { module = "io.vertx:vertx-json-schema", version.ref = "vertx" }
+vertx-junit5 = { module = "io.vertx:vertx-junit5", version.ref = "vertx" }
+vertx-lang-kotlin = { module = "io.vertx:vertx-lang-kotlin", version.ref = "vertx" }
+vertx-lang-kotlin-coroutines = { module = "io.vertx:vertx-lang-kotlin-coroutines", version.ref = "vertx" }
+vertx-pg-client = { module = "io.vertx:vertx-pg-client", version.ref = "vertx" }
+vertx-stack-depchain = { module = "io.vertx:vertx-stack-depchain", version.ref = "vertx" }
+vertx-web = { module = "io.vertx:vertx-web", version.ref = "vertx" }
+vertx-web-client = { module = "io.vertx:vertx-web-client", version.ref = "vertx" }
+vertx-web-openapi = { module = "io.vertx:vertx-web-openapi", version.ref = "vertx" }
+vertx-web-validation = { module = "io.vertx:vertx-web-validation", version.ref = "vertx" }
+
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow-plugin" }
