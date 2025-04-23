@@ -21,6 +21,9 @@ object SwaggerRouter {
         router.get("/swagger").handler { ctx ->
             ctx.response().sendFile("webroot/swagger-ui.html")
         }
+        router.get("/").handler { ctx ->
+            ctx.response().sendFile("webroot/swagger-ui.html")
+        }
         router.get("/openapi.yaml").handler { ctx ->
             vertx.fileSystem().readFile("src/main/resources/openapi.yaml").onSuccess { buffer ->
                 ctx.response()
