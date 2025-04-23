@@ -7,7 +7,7 @@ junit-jupiter = "5.9.1"
 kotlin = "2.1.20"
 liquibase = "4.31.1"
 ongres-scram = "2.1"
-postgresql = "42.7.3"
+postgresql = "42.7.5"
 shadow-plugin = "7.1.2"
 vertx = "4.5.13"
 
