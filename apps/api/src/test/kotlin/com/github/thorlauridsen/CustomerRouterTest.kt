@@ -1,6 +1,7 @@
 package com.github.thorlauridsen
 
 import com.github.thorlauridsen.dto.CustomerInputDto
+import io.netty.handler.codec.http.HttpResponseStatus
 import io.vertx.core.Vertx
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.client.WebClient
@@ -38,7 +39,7 @@ class CustomerRouterTest {
             if (ar.succeeded()) {
                 val response = ar.result()
                 testContext.verify {
-                    assertEquals(500, response.statusCode())
+                    assertEquals(HttpResponseStatus.NOT_FOUND.code(), response.statusCode())
                     testContext.completeNow()
                 }
             } else {
@@ -58,7 +59,7 @@ class CustomerRouterTest {
             .sendJsonObject(customerJson)
             .compose { postRes ->
                 testContext.verify {
-                    assertEquals(200, postRes.statusCode())
+                    assertEquals(HttpResponseStatus.OK.code(), postRes.statusCode())
                     assertEquals(customer.mail, postRes.bodyAsJsonObject().getString("mail"))
                 }
                 customerId = postRes.bodyAsJsonObject().getString("id")
@@ -66,7 +67,7 @@ class CustomerRouterTest {
             }
             .onSuccess { getRes ->
                 testContext.verify {
-                    assertEquals(200, getRes.statusCode())
+                    assertEquals(HttpResponseStatus.OK.code(), getRes.statusCode())
                     val json = getRes.bodyAsJsonObject()
                     assertEquals(customerId, json.getString("id"))
                     assertEquals(customer.mail, json.getString("mail"))
