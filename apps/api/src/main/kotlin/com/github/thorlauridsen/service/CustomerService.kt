@@ -6,7 +6,6 @@ import com.github.thorlauridsen.model.CustomerInput
 import com.github.thorlauridsen.model.ICustomerRepo
 import io.vertx.core.impl.logging.LoggerFactory
 import java.util.UUID
-import kotlin.jvm.java
 
 /**
  * This service is responsible for:
