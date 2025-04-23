@@ -59,6 +59,7 @@ dependencies {
     testImplementation(local.vertx.junit5)
     testImplementation(local.vertx.web.client)
     testImplementation(local.junit.jupiter)
+    testImplementation(local.kotlin.coroutines.test)
 }
 
 tasks.withType<ShadowJar> {
