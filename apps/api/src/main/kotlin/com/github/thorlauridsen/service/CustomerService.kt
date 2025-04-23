@@ -1,5 +1,6 @@
 package com.github.thorlauridsen.service
 
+import com.github.thorlauridsen.exception.CustomerNotFoundException
 import com.github.thorlauridsen.model.Customer
 import com.github.thorlauridsen.model.CustomerInput
 import com.github.thorlauridsen.model.ICustomerRepo
@@ -39,7 +40,7 @@ class CustomerService(private val customerRepo: ICustomerRepo) {
         logger.info("Retrieving customer with id: $id")
 
         val customer = customerRepo.find(id)
-            ?: error("Customer with id: $id not found")
+            ?: throw CustomerNotFoundException(id)
 
         logger.info("Found customer: $customer")
         return customer
