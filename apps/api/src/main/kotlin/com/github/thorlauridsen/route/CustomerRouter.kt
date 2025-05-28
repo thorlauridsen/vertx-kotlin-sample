@@ -3,6 +3,7 @@ package com.github.thorlauridsen.route
 import com.github.thorlauridsen.dto.CustomerInputDto
 import com.github.thorlauridsen.dto.toDto
 import com.github.thorlauridsen.service.CustomerService
+import io.netty.handler.codec.http.HttpResponseStatus
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.BodyHandler
@@ -55,6 +56,7 @@ object CustomerRouter : BaseRouter() {
                     logger.info("POST /customers $customer -> $saved")
 
                     routingContext.response()
+                        .setStatusCode(HttpResponseStatus.CREATED.code())
                         .putHeader("content-type", "application/json")
                         .end(json)
                 }

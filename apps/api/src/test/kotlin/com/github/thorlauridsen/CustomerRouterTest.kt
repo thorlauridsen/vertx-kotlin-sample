@@ -79,14 +79,14 @@ class CustomerRouterTest {
         client.post("/customers")
             .sendJsonObject(customerJson)
             .compose { postResponse ->
-                assertEquals(HttpResponseStatus.OK.code(), postResponse.statusCode())
+                assertEquals(HttpResponseStatus.CREATED.code(), postResponse.statusCode())
                 assertEquals(customer.mail, postResponse.bodyAsJsonObject().getString("mail"))
 
                 customerId = postResponse.bodyAsJsonObject().getString("id")
                 client.get("/customers/$customerId").send()
             }
             .onSuccess { getResponse ->
-                assertEquals(HttpResponseStatus.OK.code(), getResponse.statusCode())
+                assertEquals(HttpResponseStatus.CREATED.code(), getResponse.statusCode())
                 val json = getResponse.bodyAsJsonObject()
                 val foundCustomer = json.mapTo(CustomerDto::class.java)
 
