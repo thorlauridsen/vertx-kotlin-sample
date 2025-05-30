@@ -2,6 +2,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+import org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode.IGNORE
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     application
@@ -9,9 +11,7 @@ plugins {
 }
 
 val mainVerticleName = "com.github.thorlauridsen.MainVerticle"
-val launcherClassName = "io.vertx.core.Launcher"
-
-val doOnChange = "${projectDir}/gradlew classes"
+val launcherClassName = "io.vertx.launcher.application.VertxApplication"
 
 application {
     mainClass.set(launcherClassName)
@@ -29,11 +29,11 @@ dependencies {
     implementation(local.vertx.json.schema)
     implementation(local.vertx.lang.kotlin)
     implementation(local.vertx.lang.kotlin.coroutines)
+    implementation(local.vertx.launcher)
     implementation(local.vertx.pg.client)
     implementation(local.vertx.web)
     implementation(local.vertx.web.openapi)
     implementation(local.vertx.web.validation)
-    implementation(platform(local.vertx.stack.depchain))
 
     // FasterXML Jackson databind for JSON serialization/deserialization
     implementation(local.jackson.databind)
@@ -49,17 +49,15 @@ dependencies {
     // Liquibase for database migrations
     implementation(local.liquibase.core)
 
-    // JDBC connection pool for Vert.x + PostgreSQL
-    implementation(local.agroal.pool)
-
-    // SCRAM client for authenticating PostgreSQL connections
-    implementation(local.ongres.scram.client)
-
     // Test dependencies
     testImplementation(local.vertx.junit5)
     testImplementation(local.vertx.web.client)
     testImplementation(local.junit.jupiter)
     testImplementation(local.kotlin.coroutines.test)
+}
+
+tasks.withType<KotlinJvmCompile>().configureEach {
+    jvmTargetValidationMode.set(IGNORE)
 }
 
 tasks.withType<ShadowJar> {
@@ -78,10 +76,5 @@ tasks.withType<Test> {
 }
 
 tasks.withType<JavaExec> {
-    args = listOf(
-        "run",
-        mainVerticleName,
-        "--launcher-class=$launcherClassName",
-        "--on-redeploy=$doOnChange"
-    )
+    args = listOf(mainVerticleName)
 }

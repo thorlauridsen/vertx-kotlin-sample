@@ -1,6 +1,8 @@
 database:
-  url: jdbc:h2:~/test
-  username: sa
-  password:
-  liquibase:
-    changelog: db/changelog/db.changelog-master.yaml
+    host: h2
+    port: 0
+    name: test
+    username: sa
+    password: ''
+    liquibase:
+        changelog: db/changelog/db.changelog-master.yaml
