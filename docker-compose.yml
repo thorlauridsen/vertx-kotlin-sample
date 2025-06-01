@@ -19,7 +19,9 @@ services:
             - postgres
         command: >
             java
-            -Ddatabase.url=jdbc:postgresql://postgres:5432/sample-db
+            -Ddatabase.host=postgres
+            -Ddatabase.port=5432
+            -Ddatabase.name=sample-db
             -Ddatabase.username=postgres
             -Ddatabase.password=postgres
             -jar app.jar

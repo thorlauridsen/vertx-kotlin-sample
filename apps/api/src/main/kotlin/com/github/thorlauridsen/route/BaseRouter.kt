@@ -3,8 +3,8 @@ package com.github.thorlauridsen.route
 import com.github.thorlauridsen.dto.ErrorDto
 import com.github.thorlauridsen.exception.DomainException
 import io.netty.handler.codec.http.HttpResponseStatus
-import io.vertx.core.impl.logging.Logger
-import io.vertx.core.impl.logging.LoggerFactory
+import io.vertx.core.internal.logging.Logger
+import io.vertx.core.internal.logging.LoggerFactory
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
 

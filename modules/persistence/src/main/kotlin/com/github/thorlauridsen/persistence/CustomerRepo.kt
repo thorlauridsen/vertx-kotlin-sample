@@ -25,7 +25,7 @@ class CustomerRepo(private val client: SqlClient) : ICustomerRepo {
     override suspend fun save(customer: CustomerInput): Customer {
         val id = UUID.randomUUID()
 
-        client.preparedQuery("INSERT INTO customer(id, mail) VALUES (?, ?)")
+        client.preparedQuery("INSERT INTO customer (id, mail) VALUES ($1, $2)")
             .execute(Tuple.of(id, customer.mail))
             .coAwait()
 
@@ -38,7 +38,7 @@ class CustomerRepo(private val client: SqlClient) : ICustomerRepo {
      * @return [Customer] or null if not found.
      */
     override suspend fun find(id: UUID): Customer? {
-        val row = client.preparedQuery("SELECT id, mail FROM customer WHERE id = ?")
+        val row = client.preparedQuery("SELECT id, mail FROM customer WHERE id = $1")
             .execute(Tuple.of(id))
             .coAwait()
             .firstOrNull()

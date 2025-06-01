@@ -35,12 +35,10 @@ class CustomerRouterTest {
         this.vertx = vertx
         client = WebClient.create(vertx, clientOptions)
 
-        vertx.deployVerticle(MainVerticle()) { ar ->
-            if (ar.succeeded()) {
-                testContext.completeNow()
-            } else {
-                testContext.failNow(ar.cause())
-            }
+        vertx.deployVerticle(MainVerticle()).onSuccess {
+            testContext.completeNow()
+        }.onFailure { ar ->
+            testContext.failNow(ar)
         }
     }
 
@@ -53,14 +51,11 @@ class CustomerRouterTest {
     fun `get customer - random id - returns not found`() {
         val id = UUID.randomUUID()
 
-        client.get("/customers/$id").send { ar ->
-            if (ar.succeeded()) {
-                val response = ar.result()
-                assertEquals(HttpResponseStatus.NOT_FOUND.code(), response.statusCode())
-
-            } else {
-                throw ar.cause()
-            }
+        client.get("/customers/$id").send().onSuccess {
+            val response = it
+            assertEquals(HttpResponseStatus.NOT_FOUND.code(), response.statusCode())
+        }.onFailure { ar ->
+            throw ar
         }
     }
 

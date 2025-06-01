@@ -4,7 +4,7 @@ import com.github.thorlauridsen.exception.CustomerNotFoundException
 import com.github.thorlauridsen.model.Customer
 import com.github.thorlauridsen.model.CustomerInput
 import com.github.thorlauridsen.model.ICustomerRepo
-import io.vertx.core.impl.logging.LoggerFactory
+import io.vertx.core.internal.logging.LoggerFactory
 import java.util.UUID
 
 /**
