@@ -8,7 +8,7 @@ liquibase = "4.33.0"
 postgresql = "42.7.7"
 shadow-plugin = "8.1.1"
 vertx = "5.0.3"
-vertx-openapi = "4.5.18"
+vertx-openapi = "4.5.19"
 
 [libraries]
 # FasterXML Jackson dependencies for JSON serialization/deserialization and Java 8 date/time support
