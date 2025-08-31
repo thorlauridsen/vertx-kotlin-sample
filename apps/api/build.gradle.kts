@@ -68,7 +68,7 @@ tasks.withType<ShadowJar> {
     mergeServiceFiles()
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
     testLogging {
         events = setOf(PASSED, SKIPPED, FAILED)
