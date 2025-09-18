@@ -54,6 +54,9 @@ dependencies {
     testImplementation(local.vertx.web.client)
     testImplementation(local.junit.jupiter)
     testImplementation(local.kotlin.coroutines.test)
+
+    // JUnit platform launcher dependency for running JUnit tests
+    testRuntimeOnly(local.junit.platform.launcher)
 }
 
 tasks.withType<KotlinJvmCompile>().configureEach {
