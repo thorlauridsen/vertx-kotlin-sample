@@ -2,8 +2,8 @@
 coroutines = "1.10.2"
 h2database = "2.3.232"
 jackson = "2.20.0"
-junit-jupiter = "5.9.1"
-junit-platform-launcher = '1.12.2'
+junit-jupiter = "5.13.4"
+junit-platform-launcher = '1.13.4'
 kotlin = "2.2.20"
 liquibase = "4.33.0"
 postgresql = "42.7.8"
