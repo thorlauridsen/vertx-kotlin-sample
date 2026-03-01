@@ -7,7 +7,7 @@ junit-platform-launcher = '6.0.3'
 kotlin = "2.3.10"
 liquibase = "5.0.1"
 postgresql = "42.7.10"
-shadow-plugin = "9.3.1"
+shadow-plugin = "9.3.2"
 vertx = "5.0.8"
 vertx-openapi = "4.5.25"
 
