@@ -8,7 +8,7 @@ kotlin = "2.4.21"
 liquibase = "5.0.4"
 postgresql = "42.7.14"
 shadow-plugin = "9.6.1"
-vertx = "5.2.1"
+vertx = "5.2.2"
 vertx-openapi = "4.5.35"
 
 [libraries]
